@@ -31,6 +31,9 @@ def main():
     font = pygame.font.Font(None, 64)
     percent_20 = (ASTEROID_MAX_RADIUS - ASTEROID_MIN_RADIUS) * 0.2
 
+    lives = 3
+    invincible_timer = 0
+
 
     while True:
         for event in pygame.event.get():
@@ -40,9 +43,17 @@ def main():
         
         updatable.update(dt)
 
+        if invincible_timer > 0:
+            invincible_timer -= dt
+
         for asteroid in asteroids:
             if asteroid.collision(player):
-                sys.exit("Game over!")
+                if invincible_timer <= 0:
+                    lives -= 1
+                    if lives <= 0:
+                        sys.exit("Game over!")
+                    else:
+                        invincible_timer += 2
         
             for shot in shots:
                 if asteroid.collision(shot):
@@ -61,8 +72,11 @@ def main():
         for i in drawable:
             i.draw(screen)
         
-        text = font.render(f"Score: {score:,}", True, "white")
-        screen.blit(text, (20, 20))
+        score_text = font.render(f"Score: {score:,}", True, "white")
+        screen.blit(score_text, (20, 20))
+
+        lives_text = font.render(f"Lives: {lives}", True, "white")
+        screen.blit(lives_text, (SCREEN_WIDTH - 200, 20))
 
         pygame.display.flip()
 
