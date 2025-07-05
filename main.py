@@ -51,7 +51,7 @@ def main():
                 if invincible_timer <= 0:
                     lives -= 1
                     if lives <= 0:
-                        sys.exit("Game over!")
+                        sys.exit(f"Game over! Your Score is: {score}")
                     else:
                         invincible_timer += 2
         
