@@ -54,6 +54,7 @@ def main():
                         sys.exit(f"Game over! Your Score is: {score}")
                     else:
                         invincible_timer += 2
+                        player.position = SCREEN_WIDTH/2, SCREEN_HEIGHT/2
         
             for shot in shots:
                 if asteroid.collision(shot):
